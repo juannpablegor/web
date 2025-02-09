@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación</title>
+  <!-- Añadir Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+  /* Reset CSS */
+  * {
+    min-width: 0;
+    font-family: 'Dancing Script', cursive;
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    overflow: hidden;
+    transition: background-color 3s ease;
+  }
+  .love-mode {
+    background-color: #ffccd5;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container-letter {
+    position: relative;
+  }
+
+  .cover {
+    position: absolute;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-top: 100px solid #fe3334;
+    border-bottom: 100px solid transparent;
+    transition: transform 0.75s;
+    transform-origin: top;
+  }
+
+  .paper {
+    position: absolute;
+    padding: 1.5rem;
+    line-height: 2rem;
+    right: 5px;
+    z-index: -1;
+    background: white;
+    width: 390px;
+    height: 180px;
+    transition: transform 0.75s, opacity 1s ease-out;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .letter {
+    border-left: 200px solid #ff989e;
+    border-right: 200px solid #ff989e;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid #ff858a;
+  }
+
+  .options {
+    display: flex;
+    gap: 5rem;
+  }
+
+  .options button {
+    color: #ff3234;
+    font-weight: 600;
+    border-radius: 3px;
+    background: #fad7df;
+    padding: 0.5rem 1rem;
+    border: 1px solid #fe3334;
+    cursor: pointer;
+  }
+
+  .options button:hover {
+    background: #ff989e;
+    color: white;
+  }
+
+  .open-cover {
+    transform: rotateX(180deg);
+  }
+
+  .open-paper {
+    transform: translateY(-120px);
+    opacity: 1;
+  }
+
+  .close-paper {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  /* Estilos para los corazones flotantes */
+  .heart {
+    position: absolute;
+    color: #fe3334;
+    font-size: 2rem;
+    animation: floatHeart 3s linear infinite;
+  }
+
+  @keyframes floatHeart {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+  }
+
+  /* Estilos para el mensaje épico */
+  .welcome-message {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #fe3334;
+    text-align: center;
+    animation: fadeIn 3s ease-out;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.6);
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animación de desvanecimiento para la despedida */
+  .fadeOut {
+    animation: fadeOut 2s ease-out forwards;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100px);
+    }
+  }
+
+  /* Estilos para el texto romántico */
+  .romantic-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff3234;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 0 20px rgba(255, 0, 0, 0.6);
+  }
+
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Mensaje de bienvenida épica -->
+    <div class="welcome-message" id="welcomeMessage">¡Invitación de amor!</div>
+
+    <div class="container-letter">
+      <div class="cover"></div>
+      <p class="paper romantic-text" id="mainMessage">
+        ¡Te invito a ser mi San Valentín este 14 de febrero!
+      </p>
+      <div class="letter"></div>
+    </div>
+    <div class="options">
+      <button id="open">Abrir</button>
+      <button id="close">Cerrar</button>
+    </div>
+  </main>  
+
+  <script>
+    const btnOpen = document.querySelector('#open');
+    const btnClose = document.querySelector('#close');
+    const cover = document.querySelector('.cover');
+    const paper = document.querySelector('.paper');
+    const welcomeMessage = document.querySelector('#welcomeMessage');
+
+    btnClose.disabled = true;
+
+    // Función para crear corazones flotantes
+    function createFloatingHearts() {
+      setInterval(() => {
+        for (let i = 0; i < 5; i++) {  // Generar 5 corazones en cada intervalo
+          const heart = document.createElement('span');
+          heart.classList.add('heart');
+          heart.innerHTML = '❤️';
+          heart.style.left = Math.random() * 100 + 'vw';  // Distribuir en todo el ancho de la página
+          heart.style.top = Math.random() * 100 + 'vh';   // Distribuir en todo el alto de la página
+          heart.style.animationDuration = Math.random() * 2 + 2 + 's';  // Duración aleatoria
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 3000);  // Eliminar el corazón después de 3 segundos
+        }
+      }, 500);  // Generar corazones cada 500ms
+    }
+
+    btnOpen.addEventListener('click', () => {
+      btnOpen.disabled = true;
+      btnClose.disabled = false;
+      cover.classList.add('open-cover');
+      setTimeout(() => {
+        cover.style.zIndex = -1;
+        paper.classList.add('open-paper');
+        paper.classList.remove('close-paper');
+        createFloatingHearts();  // Iniciar la creación continua de corazones al abrir la carta
+        document.body.classList.add('love-mode'); // Cambiar el fondo a un color romántico
+      }, 500);
+    });
+
+    btnClose.addEventListener('click', () => {
+      btnOpen.disabled = false;
+      btnClose.disabled = true;
+      paper.classList.remove('open-paper');
+      paper.classList.add('close-paper');
+      setTimeout(() => {
+        cover.style.zIndex = 0;
+        cover.classList.remove('open-cover');
+        // Esperar 5 segundos y redirigir
+        setTimeout(() => {
+          window.location.href = 'aceptas.html'; // Redirigir a aceptas.html
+        }, 5000);
+      }, 500);
+    });
+
+    // Hacer que la bienvenida desaparezca suavemente después de 5 segundos
+    setTimeout(() => {
+      welcomeMessage.classList.add('fadeOut');
+    }, 5000);  // 5 segundos para desaparecer
+  </script>
+</body>
+</html>
